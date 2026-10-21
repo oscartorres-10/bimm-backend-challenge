@@ -48,12 +48,16 @@ See: [Configuration | NestJS - A progressive Node.js framework](https://docs.nes
 
 _Decisions:_ will use a layered structure (domain → application → infrastructure → presentation). The domain has no framework imports. Repository contracts are abstract classes in the domain, which lets NestJS inject them without string tokens and lets unit tests use in-memory fakes.
 
-- [ ] **Step 5: XML parser:** Add validated XML parsing and vPIC XML fixtures. ➕ 2026-10-21
+- [x] **Step 5: XML parser:** Add validated XML parsing and vPIC XML fixtures. ➕ 2026-10-21 ✅ 2026-10-21
 
-#CONTINUE  here investigating
+See: [NaturalIntelligence/fast-xml-parser: Validate XML, Parse XML and Build XML rapidly without C/C++ based libraries and no callback.](https://github.com/NaturalIntelligence/fast-xml-parser).
 
-- [ ] **Step 6: Transformers:** Convert parsed vPIC responses into domain objects; verify transformer coverage reaches 100%. ➕ 2026-10-21
+- [x] **Step 6: Transformers:** Convert parsed vPIC responses into domain objects; verify transformer coverage reaches 100%. ➕ 2026-10-21 ✅ 2026-10-21
+
 - [ ] **Step 7: Structured logging:** Add Pino logging and logging configuration, including development settings. ➕ 2026-10-21
+
+#CONTINUE  here
+
 - [ ] **Step 8: vPIC HTTP client:** Add the fetch-based client with timeouts, retries, cancellation, and mocked API tests. ➕ 2026-10-21
 - [ ] **Step 9: Persistence:** Add TypeORM entities and repositories, database migration, SQLite/PostgreSQL configuration, and persistence integration tests. ➕ 2026-10-21
 - [ ] **Step 10: Use cases:** Add the ingestion pipeline, startup ingestion behavior, catalog queries, and related configuration. ➕ 2026-10-21
