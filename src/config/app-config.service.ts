@@ -22,7 +22,7 @@ export class AppConfigService {
    * `ConfigService<Env, true>` means "the config has the shape of Env and has
    * already been validated", so `get` never returns `undefined`.
    */
-  constructor(private readonly config: ConfigService<Env, true>) { }
+  constructor(private readonly config: ConfigService<Env, true>) {}
 
   /** Reads one validated variable. */
   private get<K extends keyof Env>(key: K): Env[K] {

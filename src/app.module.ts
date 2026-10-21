@@ -6,4 +6,4 @@ import { AppConfigModule } from './config/app-config.module';
   imports: [AppConfigModule.forRoot()],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

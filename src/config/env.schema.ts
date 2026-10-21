@@ -18,8 +18,6 @@ import { z } from 'zod';
 
 /** The three environments the service knows how to run in. */
 export const NODE_ENVIRONMENTS = ['development', 'test', 'production'] as const;
-;
-
 /**
  * Turns text such as "3000" into a whole number and checks its range.
  * `z.coerce.number()` converts the string to a number before validating it.
@@ -28,16 +26,15 @@ const intFromEnv = (defaultValue: number, min: number, max: number) =>
   z.coerce.number().int().min(min).max(max).default(defaultValue);
 
 /** The full schema. Each key is one environment variable. */
-export const envSchema = z
-  .object({
-    // ---- General -----------------------------------------------------------
-    /** Which environment we are running in. Changes some defaults. */
-    NODE_ENV: z.enum(NODE_ENVIRONMENTS).default('development'),
-    /** TCP port the HTTP server listens on. */
-    PORT: intFromEnv(3000, 1, 65535),
-    /** Network interface to listen on. 0.0.0.0 = every interface (needed in Docker). */
-    HOST: z.string().min(1).default('0.0.0.0'),
-  })
+export const envSchema = z.object({
+  // ---- General -----------------------------------------------------------
+  /** Which environment we are running in. Changes some defaults. */
+  NODE_ENV: z.enum(NODE_ENVIRONMENTS).default('development'),
+  /** TCP port the HTTP server listens on. */
+  PORT: intFromEnv(3000, 1, 65535),
+  /** Network interface to listen on. 0.0.0.0 = every interface (needed in Docker). */
+  HOST: z.string().min(1).default('0.0.0.0'),
+});
 
 /** The TypeScript type of a validated configuration object. */
 export type Env = z.infer<typeof envSchema>;
