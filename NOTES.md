@@ -44,8 +44,14 @@ See:
 
 See: [Configuration | NestJS - A progressive Node.js framework](https://docs.nestjs.com/application/configuration).
 
-- [ ] **Step 4: Domain model:** Add catalog models, repository contracts, the catalog combiner, and in-memory repositories. ➕ 2026-10-21
+- [x] **Step 4: Domain model:** Add catalog models, repository contracts, the catalog combiner, and in-memory repositories. ➕ 2026-10-21 ✅ 2026-10-21
+
+_Decisions:_ will use a layered structure (domain → application → infrastructure → presentation). The domain has no framework imports. Repository contracts are abstract classes in the domain, which lets NestJS inject them without string tokens and lets unit tests use in-memory fakes.
+
 - [ ] **Step 5: XML parser:** Add validated XML parsing and vPIC XML fixtures. ➕ 2026-10-21
+
+#CONTINUE  here investigating
+
 - [ ] **Step 6: Transformers:** Convert parsed vPIC responses into domain objects; verify transformer coverage reaches 100%. ➕ 2026-10-21
 - [ ] **Step 7: Structured logging:** Add Pino logging and logging configuration, including development settings. ➕ 2026-10-21
 - [ ] **Step 8: vPIC HTTP client:** Add the fetch-based client with timeouts, retries, cancellation, and mocked API tests. ➕ 2026-10-21
