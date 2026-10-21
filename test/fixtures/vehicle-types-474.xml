@@ -1,0 +1,24 @@
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Count>4</Count>
+  <Message>Response returned successfully</Message>
+  <SearchCriteria>Make ID: 474</SearchCriteria>
+  <Results>
+    <VehicleTypesForMakeIds>
+      <VehicleTypeId>1</VehicleTypeId>
+      <VehicleTypeName>Motorcycle</VehicleTypeName>
+    </VehicleTypesForMakeIds>
+    <VehicleTypesForMakeIds>
+      <VehicleTypeId>2</VehicleTypeId>
+      <VehicleTypeName>Passenger Car</VehicleTypeName>
+    </VehicleTypesForMakeIds>
+    <VehicleTypesForMakeIds>
+      <VehicleTypeId>3</VehicleTypeId>
+      <VehicleTypeName>Truck</VehicleTypeName>
+    </VehicleTypesForMakeIds>
+    <VehicleTypesForMakeIds>
+      <VehicleTypeId>7</VehicleTypeId>
+      <VehicleTypeName>Multipurpose Passenger Vehicle (MPV)</VehicleTypeName>
+    </VehicleTypesForMakeIds>
+  </Results>
+</Response>

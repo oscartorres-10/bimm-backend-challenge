@@ -1,0 +1,23 @@
+<Response xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Count>4</Count>
+  <Message>Response returned successfully</Message>
+  <Results>
+    <AllVehicleMakes>
+      <Make_ID>9999</Make_ID>
+      <Make_Name>4M FARM &amp; TRAILER SALES</Make_Name>
+    </AllVehicleMakes>
+    <AllVehicleMakes>
+      <Make_ID>440</Make_ID>
+      <Make_Name>ASTON MARTIN</Make_Name>
+    </AllVehicleMakes>
+    <AllVehicleMakes>
+      <Make_ID>474</Make_ID>
+      <Make_Name>HONDA</Make_Name>
+    </AllVehicleMakes>
+    <AllVehicleMakes>
+      <Make_ID>448</Make_ID>
+      <Make_Name>TOYOTA</Make_Name>
+    </AllVehicleMakes>
+  </Results>
+</Response>
