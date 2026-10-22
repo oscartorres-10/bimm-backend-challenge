@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="13" failures="0" errors="0" time="0.552">
-  <testsuite name="Persistence (integration)" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:52" time="0.432" tests="13">
+<testsuites name="jest tests" tests="13" failures="0" errors="0" time="0.53">
+  <testsuite name="Persistence (integration)" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:26" time="0.41" tests="13">
     <testcase classname="Persistence (integration) schema migrations produce exactly the schema described by the entities" name="Persistence (integration) schema migrations produce exactly the schema described by the entities" time="0.004">
     </testcase>
     <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository saves a batch and reads it back in the unified shape" name="Persistence (integration) TypeOrmVehicleCatalogRepository saves a batch and reads it back in the unified shape" time="0.007">
@@ -17,7 +17,7 @@
     </testcase>
     <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository paginates and still reports the total count" name="Persistence (integration) TypeOrmVehicleCatalogRepository paginates and still reports the total count" time="0.001">
     </testcase>
-    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" name="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" time="0.052">
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" name="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" time="0.054">
     </testcase>
     <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository wraps database failures in PersistenceError" name="Persistence (integration) TypeOrmVehicleCatalogRepository wraps database failures in PersistenceError" time="0.006">
     </testcase>
@@ -25,7 +25,7 @@
     </testcase>
     <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository returns the latest run" name="Persistence (integration) TypeOrmIngestionRunRepository returns the latest run" time="0.002">
     </testcase>
-    <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" name="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" time="0.002">
+    <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" name="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" time="0.001">
     </testcase>
   </testsuite>
 </testsuites>

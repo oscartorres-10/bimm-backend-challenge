@@ -1,21 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="78" failures="0" errors="0" time="1.422">
-  <testsuite name="VpicClient" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:50" time="0.697" tests="13">
+<testsuites name="jest tests" tests="115" failures="0" errors="0" time="1.684">
+  <testsuite name="IngestionService" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:23" time="0.467" tests="23">
+    <testcase classname="IngestionService ingests every make with its vehicle types in the unified shape" name="IngestionService ingests every make with its vehicle types in the unified shape" time="0.01">
+    </testcase>
+    <testcase classname="IngestionService saves in batches of INGESTION_BATCH_SIZE" name="IngestionService saves in batches of INGESTION_BATCH_SIZE" time="0.002">
+    </testcase>
+    <testcase classname="IngestionService respects INGESTION_MAKE_LIMIT" name="IngestionService respects INGESTION_MAKE_LIMIT" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService never exceeds INGESTION_CONCURRENCY parallel requests" name="IngestionService never exceeds INGESTION_CONCURRENCY parallel requests" time="0.013">
+    </testcase>
+    <testcase classname="IngestionService keeps going when vehicle types fail for some makes (partial success)" name="IngestionService keeps going when vehicle types fail for some makes (partial success)" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService treats invalid XML for one make as a per-make failure" name="IngestionService treats invalid XML for one make as a per-make failure" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService fails the run when every make fails" name="IngestionService fails the run when every make fails" time="0">
+    </testcase>
+    <testcase classname="IngestionService fails the run (without touching stored data) when the makes list cannot be downloaded" name="IngestionService fails the run (without touching stored data) when the makes list cannot be downloaded" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService fails the run when the makes XML is malformed" name="IngestionService fails the run when the makes XML is malformed" time="0">
+    </testcase>
+    <testcase classname="IngestionService fails the run when the makes response has an unexpected structure" name="IngestionService fails the run when the makes response has an unexpected structure" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService counts and logs malformed records without failing" name="IngestionService counts and logs malformed records without failing" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService fails the run when saving to the database fails" name="IngestionService fails the run when saving to the database fails" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService logs unexpected errors with their stack trace" name="IngestionService logs unexpected errors with their stack trace" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService still returns a failed run if recording the failure also fails" name="IngestionService still returns a failed run if recording the failure also fails" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService refuses to start a second run while one is in progress" name="IngestionService refuses to start a second run while one is in progress" time="0.002">
+    </testcase>
+    <testcase classname="IngestionService reports the active run id while running" name="IngestionService reports the active run id while running" time="0.005">
+    </testcase>
+    <testcase classname="IngestionService releases the slot if the run cannot even be registered" name="IngestionService releases the slot if the run cannot even be registered" time="0.001">
+    </testcase>
+    <testcase classname="IngestionService cancels the run on shutdown and records why" name="IngestionService cancels the run on shutdown and records why" time="0.012">
+    </testcase>
+    <testcase classname="IngestionService does nothing on shutdown when idle" name="IngestionService does nothing on shutdown when idle" time="0">
+    </testcase>
+    <testcase classname="finalStatus 10 makes, 0 failed → SUCCEEDED" name="finalStatus 10 makes, 0 failed → SUCCEEDED" time="0.001">
+    </testcase>
+    <testcase classname="finalStatus 0 makes, 0 failed → SUCCEEDED" name="finalStatus 0 makes, 0 failed → SUCCEEDED" time="0">
+    </testcase>
+    <testcase classname="finalStatus 10 makes, 3 failed → PARTIALLY_SUCCEEDED" name="finalStatus 10 makes, 3 failed → PARTIALLY_SUCCEEDED" time="0">
+    </testcase>
+    <testcase classname="finalStatus 10 makes, 10 failed → FAILED" name="finalStatus 10 makes, 10 failed → FAILED" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="VpicClient" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.236" tests="13">
     <testcase classname="VpicClient downloads the all-makes XML from the configured URL" name="VpicClient downloads the all-makes XML from the configured URL" time="0.006">
     </testcase>
-    <testcase classname="VpicClient fills the make id into the vehicle types URL template" name="VpicClient fills the make id into the vehicle types URL template" time="0.001">
+    <testcase classname="VpicClient fills the make id into the vehicle types URL template" name="VpicClient fills the make id into the vehicle types URL template" time="0">
     </testcase>
-    <testcase classname="VpicClient retries a server error and then succeeds" name="VpicClient retries a server error and then succeeds" time="0.004">
+    <testcase classname="VpicClient retries a server error and then succeeds" name="VpicClient retries a server error and then succeeds" time="0.001">
     </testcase>
     <testcase classname="VpicClient retries network failures and gives up after the retry budget" name="VpicClient retries network failures and gives up after the retry budget" time="0.003">
     </testcase>
     <testcase classname="VpicClient does not retry a permanent HTTP error such as 404" name="VpicClient does not retry a permanent HTTP error such as 404" time="0.001">
     </testcase>
-    <testcase classname="VpicClient reports a timeout when the server is too slow" name="VpicClient reports a timeout when the server is too slow" time="0.104">
+    <testcase classname="VpicClient reports a timeout when the server is too slow" name="VpicClient reports a timeout when the server is too slow" time="0.107">
     </testcase>
     <testcase classname="VpicClient stops immediately (no retries) when the caller cancels" name="VpicClient stops immediately (no retries) when the caller cancels" time="0.001">
     </testcase>
-    <testcase classname="VpicClient wraps a failure while reading the response body" name="VpicClient wraps a failure while reading the response body" time="0">
+    <testcase classname="VpicClient wraps a failure while reading the response body" name="VpicClient wraps a failure while reading the response body" time="0.001">
     </testcase>
     <testcase classname="isRetryableStatus HTTP 429 → retryable: true" name="isRetryableStatus HTTP 429 → retryable: true" time="0">
     </testcase>
@@ -28,8 +76,40 @@
     <testcase classname="isRetryableStatus HTTP 404 → retryable: false" name="isRetryableStatus HTTP 404 → retryable: false" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="buildTypeOrmOptions" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:50" time="0.158" tests="4">
-    <testcase classname="buildTypeOrmOptions builds SQLite options with WAL enabled for a file database" name="buildTypeOrmOptions builds SQLite options with WAL enabled for a file database" time="0.001">
+  <testsuite name="CatalogQueryService" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.164" tests="8">
+    <testcase classname="CatalogQueryService uses offset 0 and the default page size when none is given" name="CatalogQueryService uses offset 0 and the default page size when none is given" time="0.003">
+    </testcase>
+    <testcase classname="CatalogQueryService caps the default page size at the configured maximum" name="CatalogQueryService caps the default page size at the configured maximum" time="0">
+    </testcase>
+    <testcase classname="CatalogQueryService trims the name filter and ignores a blank one" name="CatalogQueryService trims the name filter and ignores a blank one" time="0.001">
+    </testcase>
+    <testcase classname="CatalogQueryService rejects invalid paging { offset: -1 }" name="CatalogQueryService rejects invalid paging { offset: -1 }" time="0.003">
+    </testcase>
+    <testcase classname="CatalogQueryService rejects invalid paging { limit: 0 }" name="CatalogQueryService rejects invalid paging { limit: 0 }" time="0">
+    </testcase>
+    <testcase classname="CatalogQueryService rejects invalid paging { limit: 101 }" name="CatalogQueryService rejects invalid paging { limit: 101 }" time="0.001">
+    </testcase>
+    <testcase classname="CatalogQueryService returns the applied paging values and whether more pages exist" name="CatalogQueryService returns the applied paging values and whether more pages exist" time="0.001">
+    </testcase>
+    <testcase classname="CatalogQueryService delegates single lookups to the repositories" name="CatalogQueryService delegates single lookups to the repositories" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="IngestionStartupService" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.12" tests="6">
+    <testcase classname="IngestionStartupService marks runs interrupted by a previous crash as failed" name="IngestionStartupService marks runs interrupted by a previous crash as failed" time="0.002">
+    </testcase>
+    <testcase classname="IngestionStartupService does not ingest when the feature flag is off" name="IngestionStartupService does not ingest when the feature flag is off" time="0">
+    </testcase>
+    <testcase classname="IngestionStartupService starts an ingestion in the background when the database is empty" name="IngestionStartupService starts an ingestion in the background when the database is empty" time="0">
+    </testcase>
+    <testcase classname="IngestionStartupService skips the startup ingestion when data already exists" name="IngestionStartupService skips the startup ingestion when data already exists" time="0.001">
+    </testcase>
+    <testcase classname="IngestionStartupService re-ingests on every startup when skipping is disabled" name="IngestionStartupService re-ingests on every startup when skipping is disabled" time="0">
+    </testcase>
+    <testcase classname="IngestionStartupService never blocks startup if the ingestion cannot be launched" name="IngestionStartupService never blocks startup if the ingestion cannot be launched" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="buildTypeOrmOptions" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.131" tests="4">
+    <testcase classname="buildTypeOrmOptions builds SQLite options with WAL enabled for a file database" name="buildTypeOrmOptions builds SQLite options with WAL enabled for a file database" time="0.002">
     </testcase>
     <testcase classname="buildTypeOrmOptions disables WAL for an in-memory SQLite database" name="buildTypeOrmOptions disables WAL for an in-memory SQLite database" time="0">
     </testcase>
@@ -38,8 +118,26 @@
     <testcase classname="buildTypeOrmOptions disables SSL for PostgreSQL when not requested" name="buildTypeOrmOptions disables SSL for PostgreSQL when not requested" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="transformMakes" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:50" time="0.071" tests="7">
-    <testcase classname="transformMakes transforms the parsed real response into makes" name="transformMakes transforms the parsed real response into makes" time="0.004">
+  <testsuite name="chunk" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.064" tests="8">
+    <testcase classname="chunk splits a list into equal pieces with a smaller last piece" name="chunk splits a list into equal pieces with a smaller last piece" time="0.001">
+    </testcase>
+    <testcase classname="chunk returns no pieces for an empty list" name="chunk returns no pieces for an empty list" time="0.001">
+    </testcase>
+    <testcase classname="chunk rejects a size that is not a positive integer" name="chunk rejects a size that is not a positive integer" time="0.001">
+    </testcase>
+    <testcase classname="mapWithConcurrency keeps results in the same order as the input" name="mapWithConcurrency keeps results in the same order as the input" time="0.031">
+    </testcase>
+    <testcase classname="mapWithConcurrency never runs more than `concurrency` workers at the same time" name="mapWithConcurrency never runs more than `concurrency` workers at the same time" time="0.006">
+    </testcase>
+    <testcase classname="mapWithConcurrency records failures without stopping the other items" name="mapWithConcurrency records failures without stopping the other items" time="0.001">
+    </testcase>
+    <testcase classname="mapWithConcurrency handles an empty list" name="mapWithConcurrency handles an empty list" time="0">
+    </testcase>
+    <testcase classname="mapWithConcurrency rejects an invalid concurrency" name="mapWithConcurrency rejects an invalid concurrency" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="transformMakes" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:24" time="0.059" tests="7">
+    <testcase classname="transformMakes transforms the parsed real response into makes" name="transformMakes transforms the parsed real response into makes" time="0.005">
     </testcase>
     <testcase classname="transformMakes trims whitespace around names and ids" name="transformMakes trims whitespace around names and ids" time="0">
     </testcase>
@@ -49,40 +147,22 @@
     </testcase>
     <testcase classname="transformMakes returns no makes when Results is empty" name="transformMakes returns no makes when Results is empty" time="0">
     </testcase>
-    <testcase classname="transformMakes throws TransformationError when the response envelope is wrong" name="transformMakes throws TransformationError when the response envelope is wrong" time="0.003">
+    <testcase classname="transformMakes throws TransformationError when the response envelope is wrong" name="transformMakes throws TransformationError when the response envelope is wrong" time="0.002">
     </testcase>
-    <testcase classname="transformMakes throws TransformationError when the item list is not a list" name="transformMakes throws TransformationError when the item list is not a list" time="0.001">
-    </testcase>
-  </testsuite>
-  <testsuite name="chunk" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:50" time="0.064" tests="8">
-    <testcase classname="chunk splits a list into equal pieces with a smaller last piece" name="chunk splits a list into equal pieces with a smaller last piece" time="0.001">
-    </testcase>
-    <testcase classname="chunk returns no pieces for an empty list" name="chunk returns no pieces for an empty list" time="0">
-    </testcase>
-    <testcase classname="chunk rejects a size that is not a positive integer" name="chunk rejects a size that is not a positive integer" time="0.002">
-    </testcase>
-    <testcase classname="mapWithConcurrency keeps results in the same order as the input" name="mapWithConcurrency keeps results in the same order as the input" time="0.031">
-    </testcase>
-    <testcase classname="mapWithConcurrency never runs more than `concurrency` workers at the same time" name="mapWithConcurrency never runs more than `concurrency` workers at the same time" time="0.005">
-    </testcase>
-    <testcase classname="mapWithConcurrency records failures without stopping the other items" name="mapWithConcurrency records failures without stopping the other items" time="0">
-    </testcase>
-    <testcase classname="mapWithConcurrency handles an empty list" name="mapWithConcurrency handles an empty list" time="0">
-    </testcase>
-    <testcase classname="mapWithConcurrency rejects an invalid concurrency" name="mapWithConcurrency rejects an invalid concurrency" time="0.001">
+    <testcase classname="transformMakes throws TransformationError when the item list is not a list" name="transformMakes throws TransformationError when the item list is not a list" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="transformVehicleTypes" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.06" tests="4">
+  <testsuite name="transformVehicleTypes" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.053" tests="4">
     <testcase classname="transformVehicleTypes transforms the real response for make 440" name="transformVehicleTypes transforms the real response for make 440" time="0.004">
     </testcase>
-    <testcase classname="transformVehicleTypes returns an empty list for a make without vehicle types" name="transformVehicleTypes returns an empty list for a make without vehicle types" time="0.001">
+    <testcase classname="transformVehicleTypes returns an empty list for a make without vehicle types" name="transformVehicleTypes returns an empty list for a make without vehicle types" time="0">
     </testcase>
     <testcase classname="transformVehicleTypes skips malformed vehicle types" name="transformVehicleTypes skips malformed vehicle types" time="0">
     </testcase>
-    <testcase classname="transformVehicleTypes names the make in structural errors" name="transformVehicleTypes names the make in structural errors" time="0.002">
+    <testcase classname="transformVehicleTypes names the make in structural errors" name="transformVehicleTypes names the make in structural errors" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="validateEnv" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.049" tests="10">
+  <testsuite name="validateEnv" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.047" tests="10">
     <testcase classname="validateEnv applies sensible defaults when nothing is set" name="validateEnv applies sensible defaults when nothing is set" time="0.002">
     </testcase>
     <testcase classname="validateEnv converts strings into numbers and booleans" name="validateEnv converts strings into numbers and booleans" time="0.001">
@@ -97,28 +177,14 @@
     </testcase>
     <testcase classname="validateEnv requires the {makeId} placeholder in the vehicle types URL" name="validateEnv requires the {makeId} placeholder in the vehicle types URL" time="0">
     </testcase>
-    <testcase classname="validateEnv rejects an invalid URL" name="validateEnv rejects an invalid URL" time="0">
+    <testcase classname="validateEnv rejects an invalid URL" name="validateEnv rejects an invalid URL" time="0.001">
     </testcase>
     <testcase classname="validateEnv forbids an in-memory SQLite database in production" name="validateEnv forbids an in-memory SQLite database in production" time="0">
     </testcase>
     <testcase classname="envFilePaths lists the most specific file first" name="envFilePaths lists the most specific file first" time="0.001">
     </testcase>
   </testsuite>
-  <testsuite name="requestLogLevel" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.029" tests="6">
-    <testcase classname="requestLogLevel logs server errors as &quot;error&quot;, client errors as &quot;warn&quot;, the rest as &quot;info&quot;" name="requestLogLevel logs server errors as &quot;error&quot;, client errors as &quot;warn&quot;, the rest as &quot;info&quot;" time="0.001">
-    </testcase>
-    <testcase classname="requestId reuses a valid incoming x-request-id header" name="requestId reuses a valid incoming x-request-id header" time="0">
-    </testcase>
-    <testcase classname="requestId generates a UUID when the header is missing or too long" name="requestId generates a UUID when the header is missing or too long" time="0.001">
-    </testcase>
-    <testcase classname="buildLoggerOptions produces JSON logs at the configured level" name="buildLoggerOptions produces JSON logs at the configured level" time="0.001">
-    </testcase>
-    <testcase classname="buildLoggerOptions uses pino-pretty when pretty logs are requested" name="buildLoggerOptions uses pino-pretty when pretty logs are requested" time="0">
-    </testcase>
-    <testcase classname="buildLoggerOptions skips the health endpoint in the access log and echoes the request id" name="buildLoggerOptions skips the health endpoint in the access log and echoes the request id" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="parseXml" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.036" tests="8">
+  <testsuite name="parseXml" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.034" tests="8">
     <testcase classname="parseXml converts a real vPIC response into JSON" name="parseXml converts a real vPIC response into JSON" time="0.003">
     </testcase>
     <testcase classname="parseXml decodes XML entities such as &amp;amp;" name="parseXml decodes XML entities such as &amp;amp;" time="0.001">
@@ -127,55 +193,69 @@
     </testcase>
     <testcase classname="parseXml always returns a list for array tags, even with a single item" name="parseXml always returns a list for array tags, even with a single item" time="0">
     </testcase>
-    <testcase classname="parseXml returns an empty string for a self-closing empty element" name="parseXml returns an empty string for a self-closing empty element" time="0.001">
+    <testcase classname="parseXml returns an empty string for a self-closing empty element" name="parseXml returns an empty string for a self-closing empty element" time="0">
     </testcase>
-    <testcase classname="parseXml throws XmlParseError with the position of malformed XML" name="parseXml throws XmlParseError with the position of malformed XML" time="0.001">
+    <testcase classname="parseXml throws XmlParseError with the position of malformed XML" name="parseXml throws XmlParseError with the position of malformed XML" time="0.002">
     </testcase>
-    <testcase classname="parseXml throws XmlParseError for non-XML content such as an HTML error page" name="parseXml throws XmlParseError for non-XML content such as an HTML error page" time="0.001">
+    <testcase classname="parseXml throws XmlParseError for non-XML content such as an HTML error page" name="parseXml throws XmlParseError for non-XML content such as an HTML error page" time="0">
     </testcase>
     <testcase classname="parseXml throws XmlParseError for an empty body" name="parseXml throws XmlParseError for an empty body" time="0">
     </testcase>
   </testsuite>
-  <testsuite name="backoffDelay" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.027" tests="9">
+  <testsuite name="app errors" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.025" tests="6">
+    <testcase classname="app errors keeps the class name, code, details and cause" name="app errors keeps the class name, code, details and cause" time="0.001">
+    </testcase>
+    <testcase classname="app errors defaults details to an empty object" name="app errors defaults details to an empty object" time="0">
+    </testcase>
+    <testcase classname="app errors includes the run id in IngestionAlreadyRunningError" name="app errors includes the run id in IngestionAlreadyRunningError" time="0.001">
+    </testcase>
+    <testcase classname="describeError describes our own errors with their code" name="describeError describes our own errors with their code" time="0">
+    </testcase>
+    <testcase classname="describeError describes any other Error as unexpected" name="describeError describes any other Error as unexpected" time="0">
+    </testcase>
+    <testcase classname="describeError describes thrown non-Error values" name="describeError describes thrown non-Error values" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="backoffDelay" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.03" tests="9">
     <testcase classname="backoffDelay doubles the delay on every attempt" name="backoffDelay doubles the delay on every attempt" time="0.001">
     </testcase>
     <testcase classname="backoffDelay adds up to 50% jitter" name="backoffDelay adds up to 50% jitter" time="0">
     </testcase>
     <testcase classname="backoffDelay never exceeds the maximum delay" name="backoffDelay never exceeds the maximum delay" time="0">
     </testcase>
-    <testcase classname="retry returns the result straight away when the first attempt works" name="retry returns the result straight away when the first attempt works" time="0.001">
+    <testcase classname="retry returns the result straight away when the first attempt works" name="retry returns the result straight away when the first attempt works" time="0">
     </testcase>
-    <testcase classname="retry retries until the operation succeeds" name="retry retries until the operation succeeds" time="0">
+    <testcase classname="retry retries until the operation succeeds" name="retry retries until the operation succeeds" time="0.001">
     </testcase>
     <testcase classname="retry gives up after the configured number of retries and rethrows the last error" name="retry gives up after the configured number of retries and rethrows the last error" time="0.001">
     </testcase>
     <testcase classname="retry does not retry errors that shouldRetry rejects" name="retry does not retry errors that shouldRetry rejects" time="0">
     </testcase>
-    <testcase classname="retry stops retrying once the abort signal fires" name="retry stops retrying once the abort signal fires" time="0">
+    <testcase classname="retry stops retrying once the abort signal fires" name="retry stops retrying once the abort signal fires" time="0.001">
     </testcase>
-    <testcase classname="retry uses a real timer when no sleep function is given" name="retry uses a real timer when no sleep function is given" time="0.001">
+    <testcase classname="retry uses a real timer when no sleep function is given" name="retry uses a real timer when no sleep function is given" time="0.004">
     </testcase>
   </testsuite>
-  <testsuite name="combineCatalog" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.024" tests="3">
+  <testsuite name="requestLogLevel" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.029" tests="6">
+    <testcase classname="requestLogLevel logs server errors as &quot;error&quot;, client errors as &quot;warn&quot;, the rest as &quot;info&quot;" name="requestLogLevel logs server errors as &quot;error&quot;, client errors as &quot;warn&quot;, the rest as &quot;info&quot;" time="0.001">
+    </testcase>
+    <testcase classname="requestId reuses a valid incoming x-request-id header" name="requestId reuses a valid incoming x-request-id header" time="0">
+    </testcase>
+    <testcase classname="requestId generates a UUID when the header is missing or too long" name="requestId generates a UUID when the header is missing or too long" time="0">
+    </testcase>
+    <testcase classname="buildLoggerOptions produces JSON logs at the configured level" name="buildLoggerOptions produces JSON logs at the configured level" time="0">
+    </testcase>
+    <testcase classname="buildLoggerOptions uses pino-pretty when pretty logs are requested" name="buildLoggerOptions uses pino-pretty when pretty logs are requested" time="0">
+    </testcase>
+    <testcase classname="buildLoggerOptions skips the health endpoint in the access log and echoes the request id" name="buildLoggerOptions skips the health endpoint in the access log and echoes the request id" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="combineCatalog" errors="0" failures="0" skipped="0" timestamp="2026-10-22T19:13:25" time="0.023" tests="3">
     <testcase classname="combineCatalog produces the exact shape required by the challenge" name="combineCatalog produces the exact shape required by the challenge" time="0.001">
     </testcase>
     <testcase classname="combineCatalog does not modify its inputs" name="combineCatalog does not modify its inputs" time="0">
     </testcase>
     <testcase classname="combineCatalog returns an empty catalog for no makes" name="combineCatalog returns an empty catalog for no makes" time="0">
-    </testcase>
-  </testsuite>
-  <testsuite name="app errors" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:51" time="0.025" tests="6">
-    <testcase classname="app errors keeps the class name, code, details and cause" name="app errors keeps the class name, code, details and cause" time="0.001">
-    </testcase>
-    <testcase classname="app errors defaults details to an empty object" name="app errors defaults details to an empty object" time="0.001">
-    </testcase>
-    <testcase classname="app errors includes the run id in IngestionAlreadyRunningError" name="app errors includes the run id in IngestionAlreadyRunningError" time="0">
-    </testcase>
-    <testcase classname="describeError describes our own errors with their code" name="describeError describes our own errors with their code" time="0">
-    </testcase>
-    <testcase classname="describeError describes any other Error as unexpected" name="describeError describes any other Error as unexpected" time="0.001">
-    </testcase>
-    <testcase classname="describeError describes thrown non-Error values" name="describeError describes thrown non-Error values" time="0">
     </testcase>
   </testsuite>
 </testsuites>

@@ -14,16 +14,21 @@ describe('validateEnv', () => {
     expect(env.PORT).toBe(3000);
     expect(env.DB_TYPE).toBe('sqlite');
     expect(env.LOG_LEVEL).toBe('info');
+    expect(env.FEATURE_INGESTION_ON_STARTUP).toBe(true);
   });
 
   it('converts strings into numbers and booleans', () => {
     const env = validateEnv({
       PORT: '8080',
       LOG_PRETTY: 'yes',
+      FEATURE_INGESTION_ON_STARTUP: '0',
+      INGESTION_CONCURRENCY: '10',
     });
 
     expect(env.PORT).toBe(8080);
     expect(env.LOG_PRETTY).toBe(true);
+    expect(env.FEATURE_INGESTION_ON_STARTUP).toBe(false);
+    expect(env.INGESTION_CONCURRENCY).toBe(10);
   });
 
   it('treats empty strings as "not set"', () => {
@@ -52,6 +57,9 @@ describe('validateEnv', () => {
 
   it('rejects out-of-range numbers', () => {
     expect(() => validateEnv({ PORT: '70000' })).toThrow(/PORT/);
+    expect(() => validateEnv({ INGESTION_CONCURRENCY: '0' })).toThrow(
+      /INGESTION_CONCURRENCY/,
+    );
   });
 
   it('requires the {makeId} placeholder in the vehicle types URL', () => {

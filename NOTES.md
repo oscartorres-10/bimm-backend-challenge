@@ -64,8 +64,10 @@ See:
 
 - [x] **Step 9: Persistence:** Add TypeORM entities and repositories, database migration, SQLite/PostgreSQL configuration, and persistence integration tests. ➕ 2026-10-21 ✅ 2026-10-22
 
-- [ ] **Step 10: Use cases:** Add the ingestion pipeline, startup ingestion behavior, catalog queries, and related configuration. ➕ 2026-10-21
+- [x] **Step 10: Use cases:** Add the ingestion pipeline, startup ingestion behavior, catalog queries, and related configuration. ➕ 2026-10-21 ✅ 2026-10-22
+
 - [ ] **Step 11: GraphQL API and health check:** Add GraphQL types, resolvers, DataLoader, error formatting and logging, plus the health endpoint. ➕ 2026-10-21
+
 - [ ] **Step 12: Wire everything together:** Connect modules and dependencies, ~~bootstrap the app~~, handle graceful shutdown, run it, and verify GraphQL and ingestion. ➕ 2026-10-21
 - [ ] **Step 13: End-to-end tests:** Test ingestion through persistence and GraphQL using a fake vPIC server; verify the e2e suite. ➕ 2026-10-21
 - [ ] **Step 14: Docker:** Add the Dockerfile and Compose stack; build and smoke-test the container and PostgreSQL setup. ➕ 2026-10-21

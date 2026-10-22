@@ -35,6 +35,24 @@ export interface VpicSettings {
   vehicleTypesUrlTemplate: string;
 }
 
+/** How the ingestion pipeline behaves. */
+export interface IngestionSettings {
+  concurrency: number;
+  batchSize: number;
+  /** 0 means no limit. */
+  makeLimit: number;
+  runOnStartup: boolean;
+  skipOnStartupIfPopulated: boolean;
+  mutationEnabled: boolean;
+}
+
+/** GraphQL server behaviour. */
+export interface GraphqlSettings {
+  introspection: boolean;
+  playground: boolean;
+  maxPageSize: number;
+}
+
 /** Database connection, as a "discriminated union": the `type` tells which shape applies. */
 export type DatabaseSettings =
   | {
@@ -100,6 +118,25 @@ export class AppConfigService {
     return {
       allMakesUrl: this.get('VPIC_ALL_MAKES_URL'),
       vehicleTypesUrlTemplate: this.get('VPIC_VEHICLE_TYPES_URL_TEMPLATE'),
+    };
+  }
+
+  get ingestion(): IngestionSettings {
+    return {
+      concurrency: this.get('INGESTION_CONCURRENCY'),
+      batchSize: this.get('INGESTION_BATCH_SIZE'),
+      makeLimit: this.get('INGESTION_MAKE_LIMIT'),
+      runOnStartup: this.get('FEATURE_INGESTION_ON_STARTUP'),
+      skipOnStartupIfPopulated: this.get('FEATURE_INGESTION_SKIP_IF_POPULATED'),
+      mutationEnabled: this.get('FEATURE_INGESTION_MUTATION'),
+    };
+  }
+
+  get graphql(): GraphqlSettings {
+    return {
+      introspection: this.get('GRAPHQL_INTROSPECTION'),
+      playground: this.get('GRAPHQL_PLAYGROUND'),
+      maxPageSize: this.get('GRAPHQL_MAX_PAGE_SIZE'),
     };
   }
 

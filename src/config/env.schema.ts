@@ -97,6 +97,34 @@ export const envSchema = z
     /** Wait before the first retry; it doubles on every following retry. */
     HTTP_RETRY_BASE_DELAY_MS: intFromEnv(500, 0, 60_000),
 
+    // ---- Ingestion ---------------------------------------------------------
+    /**
+     * How many vehicle-type requests may be in flight at the same time.
+     * vPIC answers in roughly 0.5–1.5s, so 10 ≈ 10 makes per second
+     * (~20 minutes for all ~12k makes) while staying polite to a public API.
+     */
+    INGESTION_CONCURRENCY: intFromEnv(10, 1, 50),
+    /** How many makes are processed and saved together as one "batch". */
+    INGESTION_BATCH_SIZE: intFromEnv(250, 1, 5_000),
+    /** Only ingest the first N makes. 0 means "all of them" (~12k). */
+    INGESTION_MAKE_LIMIT: intFromEnv(0, 0, 1_000_000),
+
+    // ---- Feature flags -----------------------------------------------------
+    /** Start an ingestion automatically when the service boots. */
+    FEATURE_INGESTION_ON_STARTUP: booleanFromEnv(true),
+    /** ...but skip that automatic run if the database already has data. */
+    FEATURE_INGESTION_SKIP_IF_POPULATED: booleanFromEnv(true),
+    /** Expose the `startIngestion` GraphQL mutation. */
+    FEATURE_INGESTION_MUTATION: booleanFromEnv(true),
+
+    // ---- GraphQL -----------------------------------------------------------
+    /** Allow clients to ask the API for its own schema (used by tools). */
+    GRAPHQL_INTROSPECTION: booleanFromEnv(true),
+    /** Serve the Apollo Sandbox web UI when opening /graphql in a browser. */
+    GRAPHQL_PLAYGROUND: booleanFromEnv(true),
+    /** Largest page a client may request from list queries. */
+    GRAPHQL_MAX_PAGE_SIZE: intFromEnv(1_000, 1, 20_000),
+
     // ---- Database ----------------------------------------------------------
     /** Which database engine to use. */
     DB_TYPE: z.enum(DB_TYPES).default('sqlite'),
