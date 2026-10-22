@@ -35,6 +35,26 @@ export interface VpicSettings {
   vehicleTypesUrlTemplate: string;
 }
 
+/** Database connection, as a "discriminated union": the `type` tells which shape applies. */
+export type DatabaseSettings =
+  | {
+      type: 'sqlite';
+      path: string;
+      logging: boolean;
+      migrationsRun: boolean;
+    }
+  | {
+      type: 'postgres';
+      host: string;
+      port: number;
+      username: string;
+      password: string;
+      database: string;
+      ssl: boolean;
+      logging: boolean;
+      migrationsRun: boolean;
+    };
+
 @Injectable()
 export class AppConfigService {
   /**
@@ -81,5 +101,25 @@ export class AppConfigService {
       allMakesUrl: this.get('VPIC_ALL_MAKES_URL'),
       vehicleTypesUrlTemplate: this.get('VPIC_VEHICLE_TYPES_URL_TEMPLATE'),
     };
+  }
+
+  get database(): DatabaseSettings {
+    const common = {
+      logging: this.get('DB_LOGGING'),
+      migrationsRun: this.get('DB_MIGRATIONS_RUN'),
+    };
+    if (this.get('DB_TYPE') === 'postgres') {
+      return {
+        type: 'postgres',
+        host: this.get('DB_HOST'),
+        port: this.get('DB_PORT'),
+        username: this.get('DB_USERNAME'),
+        password: this.get('DB_PASSWORD'),
+        database: this.get('DB_NAME'),
+        ssl: this.get('DB_SSL'),
+        ...common,
+      };
+    }
+    return { type: 'sqlite', path: this.get('DB_SQLITE_PATH'), ...common };
   }
 }

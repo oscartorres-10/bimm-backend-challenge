@@ -33,6 +33,7 @@ module.exports = {
   coverageReporters: ['text-summary', 'text', 'lcov', 'json-summary'],
   reporters: [
     'default',
+    ['jest-junit', { outputDirectory: 'reports', outputName: 'unit.xml' }],
   ],
   testEnvironment: 'node',
   // Watchman is a file-watching daemon; it is not needed for one-off runs

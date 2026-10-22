@@ -30,6 +30,9 @@ export const LOG_LEVELS = [
   'silent',
 ] as const;
 
+/** Databases we can store data in. */
+export const DB_TYPES = ['sqlite', 'postgres'] as const;
+
 /** Placeholder that must appear in the vehicle-types URL template. */
 export const MAKE_ID_PLACEHOLDER = '{makeId}';
 
@@ -49,45 +52,83 @@ const intFromEnv = (defaultValue: number, min: number, max: number) =>
   z.coerce.number().int().min(min).max(max).default(defaultValue);
 
 /** The full schema. Each key is one environment variable. */
-export const envSchema = z.object({
-  // ---- General -----------------------------------------------------------
-  /** Which environment we are running in. Changes some defaults. */
-  NODE_ENV: z.enum(NODE_ENVIRONMENTS).default('development'),
-  /** TCP port the HTTP server listens on. */
-  PORT: intFromEnv(3000, 1, 65535),
-  /** Network interface to listen on. 0.0.0.0 = every interface (needed in Docker). */
-  HOST: z.string().min(1).default('0.0.0.0'),
+export const envSchema = z
+  .object({
+    // ---- General -----------------------------------------------------------
+    /** Which environment we are running in. Changes some defaults. */
+    NODE_ENV: z.enum(NODE_ENVIRONMENTS).default('development'),
+    /** TCP port the HTTP server listens on. */
+    PORT: intFromEnv(3000, 1, 65535),
+    /** Network interface to listen on. 0.0.0.0 = every interface (needed in Docker). */
+    HOST: z.string().min(1).default('0.0.0.0'),
 
-  // ---- Logging -----------------------------------------------------------
-  /** Minimum severity that gets written to the logs. */
-  LOG_LEVEL: z.enum(LOG_LEVELS).default('info'),
-  /** Human-friendly coloured logs instead of JSON. Only for local development. */
-  LOG_PRETTY: booleanFromEnv(false),
+    // ---- Logging -----------------------------------------------------------
+    /** Minimum severity that gets written to the logs. */
+    LOG_LEVEL: z.enum(LOG_LEVELS).default('info'),
+    /** Human-friendly coloured logs instead of JSON. Only for local development. */
+    LOG_PRETTY: booleanFromEnv(false),
 
-  // ---- External vPIC (NHTSA) API ----------------------------------------
-  /** URL that returns every vehicle make as XML. */
-  VPIC_ALL_MAKES_URL: z
-    .url()
-    .default('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=XML'),
-  /** URL template for the vehicle types of one make. `{makeId}` is replaced. */
-  VPIC_VEHICLE_TYPES_URL_TEMPLATE: z
-    .string()
-    .default(
-      `https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/${MAKE_ID_PLACEHOLDER}?format=xml`,
-    )
-    .refine((value) => value.includes(MAKE_ID_PLACEHOLDER), {
-      message: `must contain the ${MAKE_ID_PLACEHOLDER} placeholder`,
-    })
-    .refine((value) => URL.canParse(value.replace(MAKE_ID_PLACEHOLDER, '1')), {
-      message: 'must be a valid URL',
-    }),
-  /** Give up on a single HTTP request after this many milliseconds. */
-  HTTP_TIMEOUT_MS: intFromEnv(15_000, 100, 300_000),
-  /** How many times to retry a failed HTTP request (0 = never retry). */
-  HTTP_MAX_RETRIES: intFromEnv(3, 0, 10),
-  /** Wait before the first retry; it doubles on every following retry. */
-  HTTP_RETRY_BASE_DELAY_MS: intFromEnv(500, 0, 60_000),
-});
+    // ---- External vPIC (NHTSA) API ----------------------------------------
+    /** URL that returns every vehicle make as XML. */
+    VPIC_ALL_MAKES_URL: z
+      .url()
+      .default(
+        'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=XML',
+      ),
+    /** URL template for the vehicle types of one make. `{makeId}` is replaced. */
+    VPIC_VEHICLE_TYPES_URL_TEMPLATE: z
+      .string()
+      .default(
+        `https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/${MAKE_ID_PLACEHOLDER}?format=xml`,
+      )
+      .refine((value) => value.includes(MAKE_ID_PLACEHOLDER), {
+        message: `must contain the ${MAKE_ID_PLACEHOLDER} placeholder`,
+      })
+      .refine(
+        (value) => URL.canParse(value.replace(MAKE_ID_PLACEHOLDER, '1')),
+        {
+          message: 'must be a valid URL',
+        },
+      ),
+    /** Give up on a single HTTP request after this many milliseconds. */
+    HTTP_TIMEOUT_MS: intFromEnv(15_000, 100, 300_000),
+    /** How many times to retry a failed HTTP request (0 = never retry). */
+    HTTP_MAX_RETRIES: intFromEnv(3, 0, 10),
+    /** Wait before the first retry; it doubles on every following retry. */
+    HTTP_RETRY_BASE_DELAY_MS: intFromEnv(500, 0, 60_000),
+
+    // ---- Database ----------------------------------------------------------
+    /** Which database engine to use. */
+    DB_TYPE: z.enum(DB_TYPES).default('sqlite'),
+    /** SQLite only: file path, or ":memory:" for a throw-away in-RAM database. */
+    DB_SQLITE_PATH: z.string().min(1).default('data/vehicles.sqlite'),
+    /** PostgreSQL only: connection details. */
+    DB_HOST: z.string().min(1).default('localhost'),
+    DB_PORT: intFromEnv(5432, 1, 65535),
+    DB_USERNAME: z.string().min(1).default('postgres'),
+    DB_PASSWORD: z.string().default('postgres'),
+    DB_NAME: z.string().min(1).default('vehicles'),
+    DB_SSL: booleanFromEnv(false),
+    /** Print every SQL query to the logs (very noisy, debugging only). */
+    DB_LOGGING: booleanFromEnv(false),
+    /** Apply pending database migrations (schema changes) on startup. */
+    DB_MIGRATIONS_RUN: booleanFromEnv(true),
+  })
+  .superRefine((env, ctx) => {
+    // A cross-field rule: an in-memory SQLite database disappears when the
+    // process stops, which would silently lose data in production.
+    if (
+      env.NODE_ENV === 'production' &&
+      env.DB_TYPE === 'sqlite' &&
+      env.DB_SQLITE_PATH === ':memory:'
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['DB_SQLITE_PATH'],
+        message: 'an in-memory SQLite database is not allowed in production',
+      });
+    }
+  });
 
 /** The TypeScript type of a validated configuration object. */
 export type Env = z.infer<typeof envSchema>;

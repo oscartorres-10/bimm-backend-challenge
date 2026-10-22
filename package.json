@@ -16,19 +16,25 @@
     "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --watch",
     "test:cov": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --coverage",
-    "verify": "npm run typecheck && npm run lint && npm run format:check && npm test"
+    "test:e2e": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js --config test/jest-e2e.config.js --runInBand",
+    "test:all": "npm run test:cov && npm run test:e2e",
+    "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test:all"
   },
   "dependencies": {
     "@nestjs/common": "^12.2.0",
     "@nestjs/config": "^12.0.1",
     "@nestjs/core": "^12.2.0",
     "@nestjs/platform-express": "^12.2.0",
+    "@nestjs/typeorm": "^12.0.2",
+    "better-sqlite3": "^12.11.1",
     "fast-xml-parser": "^5.11.2",
     "nestjs-pino": "^5.3.1",
+    "pg": "^8.23.1",
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
+    "typeorm": "^1.1.2",
     "zod": "^4.6.7"
   },
   "devDependencies": {
@@ -42,11 +48,15 @@
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.13.0",
     "jest": "^30.5.2",
+    "jest-junit": "^17.0.0",
     "pino-pretty": "^13.2.0",
     "prettier": "^3.9.10",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
   }
 }

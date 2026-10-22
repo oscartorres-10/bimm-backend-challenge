@@ -12,6 +12,7 @@ describe('validateEnv', () => {
 
     expect(env.NODE_ENV).toBe('development');
     expect(env.PORT).toBe(3000);
+    expect(env.DB_TYPE).toBe('sqlite');
     expect(env.LOG_LEVEL).toBe('info');
   });
 
@@ -38,14 +39,14 @@ describe('validateEnv', () => {
   it('reports every invalid variable at once', () => {
     let error: unknown;
     try {
-      validateEnv({ PORT: 'abc', LOG_LEVEL: 'loud' });
+      validateEnv({ PORT: 'abc', LOG_LEVEL: 'loud', DB_TYPE: 'oracle' });
     } catch (caught) {
       error = caught;
     }
 
     expect(error).toBeInstanceOf(InvalidConfigurationError);
     const issues = (error as InvalidConfigurationError).issues;
-    expect(issues).toHaveLength(2);
+    expect(issues).toHaveLength(3);
     expect(issues.join()).toMatch(/PORT/);
   });
 
@@ -65,6 +66,15 @@ describe('validateEnv', () => {
     expect(() => validateEnv({ VPIC_ALL_MAKES_URL: 'not a url' })).toThrow(
       /VPIC_ALL_MAKES_URL/,
     );
+  });
+
+  it('forbids an in-memory SQLite database in production', () => {
+    expect(() =>
+      validateEnv({ NODE_ENV: 'production', DB_SQLITE_PATH: ':memory:' }),
+    ).toThrow(/in-memory/);
+    expect(() =>
+      validateEnv({ NODE_ENV: 'test', DB_SQLITE_PATH: ':memory:' }),
+    ).not.toThrow();
   });
 });
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="13" failures="0" errors="0" time="0.552">
+  <testsuite name="Persistence (integration)" errors="0" failures="0" skipped="0" timestamp="2026-10-22T18:32:52" time="0.432" tests="13">
+    <testcase classname="Persistence (integration) schema migrations produce exactly the schema described by the entities" name="Persistence (integration) schema migrations produce exactly the schema described by the entities" time="0.004">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository saves a batch and reads it back in the unified shape" name="Persistence (integration) TypeOrmVehicleCatalogRepository saves a batch and reads it back in the unified shape" time="0.007">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository is idempotent and replaces the vehicle types of re-synced makes" name="Persistence (integration) TypeOrmVehicleCatalogRepository is idempotent and replaces the vehicle types of re-synced makes" time="0.003">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository keeps previous vehicle types when fresh data could not be fetched" name="Persistence (integration) TypeOrmVehicleCatalogRepository keeps previous vehicle types when fresh data could not be fetched" time="0.001">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository stores a never-synced make with a null sync date" name="Persistence (integration) TypeOrmVehicleCatalogRepository stores a never-synced make with a null sync date" time="0.001">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository does nothing for an empty batch" name="Persistence (integration) TypeOrmVehicleCatalogRepository does nothing for an empty batch" time="0.001">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository filters by name (case-insensitive, wildcards matched literally) and vehicle type" name="Persistence (integration) TypeOrmVehicleCatalogRepository filters by name (case-insensitive, wildcards matched literally) and vehicle type" time="0.002">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository paginates and still reports the total count" name="Persistence (integration) TypeOrmVehicleCatalogRepository paginates and still reports the total count" time="0.001">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" name="Persistence (integration) TypeOrmVehicleCatalogRepository handles batches larger than a single INSERT allows" time="0.052">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmVehicleCatalogRepository wraps database failures in PersistenceError" name="Persistence (integration) TypeOrmVehicleCatalogRepository wraps database failures in PersistenceError" time="0.006">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository creates, updates and finds runs" name="Persistence (integration) TypeOrmIngestionRunRepository creates, updates and finds runs" time="0.004">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository returns the latest run" name="Persistence (integration) TypeOrmIngestionRunRepository returns the latest run" time="0.002">
+    </testcase>
+    <testcase classname="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" name="Persistence (integration) TypeOrmIngestionRunRepository marks interrupted runs as failed" time="0.002">
+    </testcase>
+  </testsuite>
+</testsuites>
