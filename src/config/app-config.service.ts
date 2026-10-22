@@ -22,13 +22,26 @@ export interface LoggingSettings {
   pretty: boolean;
 }
 
+/** Settings for outgoing HTTP calls to the vPIC API. */
+export interface HttpSettings {
+  timeoutMs: number;
+  maxRetries: number;
+  retryBaseDelayMs: number;
+}
+
+/** Where the external XML data lives. */
+export interface VpicSettings {
+  allMakesUrl: string;
+  vehicleTypesUrlTemplate: string;
+}
+
 @Injectable()
 export class AppConfigService {
   /**
    * `ConfigService<Env, true>` means "the config has the shape of Env and has
    * already been validated", so `get` never returns `undefined`.
    */
-  constructor(private readonly config: ConfigService<Env, true>) {}
+  constructor(private readonly config: ConfigService<Env, true>) { }
 
   /** Reads one validated variable. */
   private get<K extends keyof Env>(key: K): Env[K] {
@@ -53,5 +66,20 @@ export class AppConfigService {
 
   get logging(): LoggingSettings {
     return { level: this.get('LOG_LEVEL'), pretty: this.get('LOG_PRETTY') };
+  }
+
+  get http(): HttpSettings {
+    return {
+      timeoutMs: this.get('HTTP_TIMEOUT_MS'),
+      maxRetries: this.get('HTTP_MAX_RETRIES'),
+      retryBaseDelayMs: this.get('HTTP_RETRY_BASE_DELAY_MS'),
+    };
+  }
+
+  get vpic(): VpicSettings {
+    return {
+      allMakesUrl: this.get('VPIC_ALL_MAKES_URL'),
+      vehicleTypesUrlTemplate: this.get('VPIC_VEHICLE_TYPES_URL_TEMPLATE'),
+    };
   }
 }

@@ -30,6 +30,9 @@ export const LOG_LEVELS = [
   'silent',
 ] as const;
 
+/** Placeholder that must appear in the vehicle-types URL template. */
+export const MAKE_ID_PLACEHOLDER = '{makeId}';
+
 const booleanFromEnv = (defaultValue: boolean) =>
   z
     .stringbool({
@@ -60,6 +63,33 @@ export const envSchema = z.object({
   LOG_LEVEL: z.enum(LOG_LEVELS).default('info'),
   /** Human-friendly coloured logs instead of JSON. Only for local development. */
   LOG_PRETTY: booleanFromEnv(false),
+
+  // ---- External vPIC (NHTSA) API ----------------------------------------
+  /** URL that returns every vehicle make as XML. */
+  VPIC_ALL_MAKES_URL: z
+    .url()
+    .default(
+      'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=XML',
+    ),
+  /** URL template for the vehicle types of one make. `{makeId}` is replaced. */
+  VPIC_VEHICLE_TYPES_URL_TEMPLATE: z
+    .string()
+    .default(
+      `https://vpic.nhtsa.dot.gov/api/vehicles/GetVehicleTypesForMakeId/${MAKE_ID_PLACEHOLDER}?format=xml`,
+    )
+    .refine((value) => value.includes(MAKE_ID_PLACEHOLDER), {
+      message: `must contain the ${MAKE_ID_PLACEHOLDER} placeholder`,
+    })
+    .refine(
+      (value) => URL.canParse(value.replace(MAKE_ID_PLACEHOLDER, '1')),
+      { message: 'must be a valid URL' },
+    ),
+  /** Give up on a single HTTP request after this many milliseconds. */
+  HTTP_TIMEOUT_MS: intFromEnv(15_000, 100, 300_000),
+  /** How many times to retry a failed HTTP request (0 = never retry). */
+  HTTP_MAX_RETRIES: intFromEnv(3, 0, 10),
+  /** Wait before the first retry; it doubles on every following retry. */
+  HTTP_RETRY_BASE_DELAY_MS: intFromEnv(500, 0, 60_000),
 });
 
 /** The TypeScript type of a validated configuration object. */

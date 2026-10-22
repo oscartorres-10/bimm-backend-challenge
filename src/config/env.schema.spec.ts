@@ -52,6 +52,21 @@ describe('validateEnv', () => {
   it('rejects out-of-range numbers', () => {
     expect(() => validateEnv({ PORT: '70000' })).toThrow(/PORT/);
   });
+
+  it('requires the {makeId} placeholder in the vehicle types URL', () => {
+    expect(() =>
+      validateEnv({
+        VPIC_VEHICLE_TYPES_URL_TEMPLATE: 'https://example.com/types',
+      }),
+    ).toThrow(/placeholder/);
+  });
+
+  it('rejects an invalid URL', () => {
+    expect(() => validateEnv({ VPIC_ALL_MAKES_URL: 'not a url' })).toThrow(
+      /VPIC_ALL_MAKES_URL/,
+    );
+  });
+
 });
 
 describe('envFilePaths', () => {
