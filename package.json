@@ -21,13 +21,19 @@
     "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test:all"
   },
   "dependencies": {
+    "@apollo/server": "^5.5.1",
+    "@as-integrations/express5": "^1.1.2",
+    "@nestjs/apollo": "^14.0.3",
     "@nestjs/common": "^12.2.0",
     "@nestjs/config": "^12.0.1",
     "@nestjs/core": "^12.2.0",
+    "@nestjs/graphql": "^14.0.3",
     "@nestjs/platform-express": "^12.2.0",
     "@nestjs/typeorm": "^12.0.2",
     "better-sqlite3": "^12.11.1",
+    "dataloader": "^2.2.3",
     "fast-xml-parser": "^5.11.2",
+    "graphql": "^16.14.2",
     "nestjs-pino": "^5.3.1",
     "pg": "^8.23.1",
     "pino": "^10.4.0",
@@ -57,6 +63,9 @@
     "typescript-eslint": "^8.72.0"
   },
   "allowScripts": {
-    "better-sqlite3@12.11.1": true
+    "better-sqlite3@12.11.1": true,
+    "@parcel/watcher@2.6.0": true,
+    "@apollo/protobufjs@1.2.8": true,
+    "unrs-resolver@1.12.2": true
   }
 }
