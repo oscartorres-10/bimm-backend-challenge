@@ -1,28 +1,45 @@
 # Notes
 
-Fill this in as you go — it carries as much weight in review as the code.
-Keep it short; bullets are fine.
-
 ## What I completed
 
-<!-- Required items done, and anything from the optional list. -->
+**Required:**
+
+- Ingestion. 
+- Persistence.
+- GraphQL. 
+- Tests.
+- TypeScript, strict mode, layered structure. 
+- Docker.
+- Docs.
+- Error handling. 
+- Structured logging. 
+- Configuration. 
+
+**Nice to have:**
+
+- NestJS (v12).
+- Feature flags for startup ingestion and for the mutation; a `/health` endpoint; graceful shutdown that cancels an ingestion in progress.
 
 ## What I left out, and why
 
-<!-- Scope you consciously cut. Naming a trade-off reads better than silence. -->
+- **GitHub Actions CI**. Due to time available, I prioritized the rest of the requirements over this optional one.
+- **Deleting makes that disappear from vPIC.** A partial or failed download could wrongly wipe good data, so rows are only added or updated. A safe version would delete only after a fully successful run ("mark and sweep").
+- **Scheduled refresh with a cron job.** The data changes rarely. Startup ingestion plus the `startIngestion` mutation is enough, and an external scheduler (a Kubernetes CronJob, for example) could call the mutation at a set interval.
+- **More E2E tests**. Again, as it was optional I prioritized the rest of the tasks. It would be better to have a more thorough end to end suite.
+- **Authentication on the mutation.** It is not required. Instead there is a feature flag to disable it (`FEATURE_INGESTION_MUTATION=false`). In a real deployment it would sit behind authentication.
 
 ## Decisions and trade-offs
 
-<!-- Structure, state management, where filtering happens, what you tested and
-     what you didn't, any library you added and why. -->
+- **SQLite by default, PostgreSQL supported.** Reviewers can run everything with `npm install` and nothing else, while Compose provide a a production-style database. Only DB-neutral TypeORM features are used, and the same integration and e2e tests run on both.
+- **Ingestion in the background.** A full run is about 12,000 HTTP calls (vPIC has no bulk endpoint), which takes 15–20 minutes at concurrency 10. The API starts serving immediately, and progress is visible through `latestIngestionRun`. Startup skips ingestion when the database already has data.
+- **Native `fetch`** plus a small, tested retry helper (exponential backoff with jitter, retrying only 429, 5xx and network errors), with a timeout on each attempt. This avoids an HTTP library dependency.
+- **Code-first GraphQL.** The TypeScript classes are the single source of truth, and `schema.gql` is generated from them.
 
 ## If I had another day
 
-<!-- What you would do next, in priority order. -->
-
-## Anything you should know to run it
-
-<!-- Deviations from `npm install && npm run dev`, if any. -->
+1. Delete makes that vanished from vPIC, only after a fully successful run.
+2. Authentication or an API key for `startIngestion`, and rate limiting.
+3. Incremental refresh: only re-fetch makes whose data is older than N days, and resume an interrupted run from its last committed batch.
 
 # Tasks
 
@@ -76,6 +93,6 @@ See:
 
 - [-] **Step 15: GitHub Actions CI:** Add the workflow for quality checks, SQLite/PostgreSQL e2e tests, and Docker build and smoke test. ➕ 2026-10-21 ❌ 2026-10-22
 
-- [/] **Step 16: Documentation:** Add the README and architecture documentation; read both through as a final review. ➕ 2026-10-21
+- [x] **Step 16: Documentation:** Add the README and architecture documentation; read both through as a final review. ➕ 2026-10-21 ✅ 2026-10-22
 
-- [/] **Step 17: Review `NOTES.md`:** Check requirements, prioritize work, clarify decisions and run instructions, remove template comments and files, then run the final quality gates and build. ➕ 2026-10-21 🛫 2026-10-22
+- [x] **Step 17: Review `NOTES.md`:** Check requirements, prioritize work, clarify decisions and run instructions, remove template comments and files, then run the final quality gates and build. ➕ 2026-10-21 🛫 2026-10-22 ✅ 2026-10-22
