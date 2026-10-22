@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: vehicles
+      POSTGRES_PASSWORD: vehicles
+      POSTGRES_DB: vehicles
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U vehicles -d vehicles']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: vehicle-catalog-service:local
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: vehicles
+      DB_PASSWORD: vehicles
+      DB_NAME: vehicles
+      INGESTION_MAKE_LIMIT: ${INGESTION_MAKE_LIMIT:-0}
+      FEATURE_INGESTION_ON_STARTUP: ${FEATURE_INGESTION_ON_STARTUP:-true}
+      GRAPHQL_INTROSPECTION: 'true'
+      GRAPHQL_PLAYGROUND: 'true'
+    restart: unless-stopped
+
+volumes:
+  pgdata:

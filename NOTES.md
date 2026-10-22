@@ -72,12 +72,10 @@ See:
 
 - [-] **Step 13: End-to-end tests:** Test ingestion through persistence and GraphQL using a fake vPIC server; verify the e2e suite. ➕ 2026-10-21 ❌ 2026-10-22
 
-- [ ] **Step 14: Docker:** Add the Dockerfile and Compose stack; build and smoke-test the container and PostgreSQL setup. ➕ 2026-10-21
-
-#CONTINUE  here
+- [x] **Step 14: Docker:** Add the Dockerfile and Compose stack; build and smoke-test the container and PostgreSQL setup. ➕ 2026-10-21 ✅ 2026-10-22
 
 - [-] **Step 15: GitHub Actions CI:** Add the workflow for quality checks, SQLite/PostgreSQL e2e tests, and Docker build and smoke test. ➕ 2026-10-21 ❌ 2026-10-22
 
-- [ ] **Step 16: Documentation:** Add the README and architecture documentation; read both through as a final review. ➕ 2026-10-21
+- [/] **Step 16: Documentation:** Add the README and architecture documentation; read both through as a final review. ➕ 2026-10-21
 
 - [/] **Step 17: Review `NOTES.md`:** Check requirements, prioritize work, clarify decisions and run instructions, remove template comments and files, then run the final quality gates and build. ➕ 2026-10-21 🛫 2026-10-22

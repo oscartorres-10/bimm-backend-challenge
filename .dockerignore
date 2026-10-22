@@ -1,0 +1,15 @@
+# Files Docker should NOT send to the build (smaller, faster, no secrets).
+node_modules
+dist
+coverage
+reports
+data
+*.sqlite*
+.env
+.env.*
+!.env.example
+.git
+.github
+.cursor
+*.md
+test
