@@ -66,7 +66,6 @@ describe('validateEnv', () => {
       /VPIC_ALL_MAKES_URL/,
     );
   });
-
 });
 
 describe('envFilePaths', () => {

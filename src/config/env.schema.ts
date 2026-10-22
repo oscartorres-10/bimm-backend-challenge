@@ -68,9 +68,7 @@ export const envSchema = z.object({
   /** URL that returns every vehicle make as XML. */
   VPIC_ALL_MAKES_URL: z
     .url()
-    .default(
-      'https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=XML',
-    ),
+    .default('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=XML'),
   /** URL template for the vehicle types of one make. `{makeId}` is replaced. */
   VPIC_VEHICLE_TYPES_URL_TEMPLATE: z
     .string()
@@ -80,10 +78,9 @@ export const envSchema = z.object({
     .refine((value) => value.includes(MAKE_ID_PLACEHOLDER), {
       message: `must contain the ${MAKE_ID_PLACEHOLDER} placeholder`,
     })
-    .refine(
-      (value) => URL.canParse(value.replace(MAKE_ID_PLACEHOLDER, '1')),
-      { message: 'must be a valid URL' },
-    ),
+    .refine((value) => URL.canParse(value.replace(MAKE_ID_PLACEHOLDER, '1')), {
+      message: 'must be a valid URL',
+    }),
   /** Give up on a single HTTP request after this many milliseconds. */
   HTTP_TIMEOUT_MS: intFromEnv(15_000, 100, 300_000),
   /** How many times to retry a failed HTTP request (0 = never retry). */
