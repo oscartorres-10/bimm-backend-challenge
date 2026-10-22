@@ -8,8 +8,18 @@ module.exports = {
   rootDir: '.',
   roots: ['<rootDir>/src'],
   testRegex: '.*\\.spec\\.ts$',
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.(t|j)s$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: {
+          module: 'ESNext',
+          moduleResolution: 'Bundler',
+        },
+      },
+    ],
   },
   collectCoverageFrom: [
     'src/**/*.ts',

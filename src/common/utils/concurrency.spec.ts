@@ -1,4 +1,5 @@
 /** Unit tests for `chunk` and `mapWithConcurrency`. */
+import { jest } from '../../../test/helpers/jest';
 import { chunk, mapWithConcurrency } from './concurrency';
 
 describe('chunk', () => {

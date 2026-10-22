@@ -10,7 +10,7 @@ import { join } from 'node:path';
 
 /** Reads a fixture file from this folder as text. */
 export function readFixture(fileName: string): string {
-  return readFileSync(join(__dirname, fileName), 'utf8');
+  return readFileSync(join(process.cwd(), 'test/fixtures', fileName), 'utf8');
 }
 
 export const ALL_MAKES_XML = readFixture('all-makes.xml');

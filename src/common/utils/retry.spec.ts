@@ -1,4 +1,5 @@
 /** Unit tests for the retry helper. Waiting is faked so tests run instantly. */
+import { jest } from '../../../test/helpers/jest';
 import { backoffDelay, retry } from './retry';
 
 const noSleep = () => Promise.resolve();

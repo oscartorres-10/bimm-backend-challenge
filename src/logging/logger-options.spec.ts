@@ -1,4 +1,5 @@
 /** Unit tests for the logging configuration helpers. */
+import { jest } from '../../test/helpers/jest';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import {
   buildLoggerOptions,
