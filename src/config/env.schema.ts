@@ -18,6 +18,26 @@ import { z } from 'zod';
 
 /** The three environments the service knows how to run in. */
 export const NODE_ENVIRONMENTS = ['development', 'test', 'production'] as const;
+
+/** Log levels understood by the Pino logger, from most to least severe. */
+export const LOG_LEVELS = [
+  'fatal',
+  'error',
+  'warn',
+  'info',
+  'debug',
+  'trace',
+  'silent',
+] as const;
+
+const booleanFromEnv = (defaultValue: boolean) =>
+  z
+    .stringbool({
+      truthy: ['true', '1', 'yes', 'on'],
+      falsy: ['false', '0', 'no', 'off'],
+    })
+    .default(defaultValue);
+
 /**
  * Turns text such as "3000" into a whole number and checks its range.
  * `z.coerce.number()` converts the string to a number before validating it.
@@ -34,6 +54,12 @@ export const envSchema = z.object({
   PORT: intFromEnv(3000, 1, 65535),
   /** Network interface to listen on. 0.0.0.0 = every interface (needed in Docker). */
   HOST: z.string().min(1).default('0.0.0.0'),
+
+  // ---- Logging -----------------------------------------------------------
+  /** Minimum severity that gets written to the logs. */
+  LOG_LEVEL: z.enum(LOG_LEVELS).default('info'),
+  /** Human-friendly coloured logs instead of JSON. Only for local development. */
+  LOG_PRETTY: booleanFromEnv(false),
 });
 
 /** The TypeScript type of a validated configuration object. */

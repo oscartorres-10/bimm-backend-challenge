@@ -16,6 +16,12 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Env } from './env.schema';
 
+/** Logging behaviour. */
+export interface LoggingSettings {
+  level: Env['LOG_LEVEL'];
+  pretty: boolean;
+}
+
 @Injectable()
 export class AppConfigService {
   /**
@@ -43,5 +49,9 @@ export class AppConfigService {
 
   get host(): string {
     return this.get('HOST');
+  }
+
+  get logging(): LoggingSettings {
+    return { level: this.get('LOG_LEVEL'), pretty: this.get('LOG_PRETTY') };
   }
 }

@@ -12,14 +12,17 @@ describe('validateEnv', () => {
 
     expect(env.NODE_ENV).toBe('development');
     expect(env.PORT).toBe(3000);
+    expect(env.LOG_LEVEL).toBe('info');
   });
 
   it('converts strings into numbers and booleans', () => {
     const env = validateEnv({
       PORT: '8080',
+      LOG_PRETTY: 'yes',
     });
 
     expect(env.PORT).toBe(8080);
+    expect(env.LOG_PRETTY).toBe(true);
   });
 
   it('treats empty strings as "not set"', () => {
@@ -35,14 +38,14 @@ describe('validateEnv', () => {
   it('reports every invalid variable at once', () => {
     let error: unknown;
     try {
-      validateEnv({ PORT: 'abc' });
+      validateEnv({ PORT: 'abc', LOG_LEVEL: 'loud' });
     } catch (caught) {
       error = caught;
     }
 
     expect(error).toBeInstanceOf(InvalidConfigurationError);
     const issues = (error as InvalidConfigurationError).issues;
-    expect(issues).toHaveLength(1);
+    expect(issues).toHaveLength(2);
     expect(issues.join()).toMatch(/PORT/);
   });
 
