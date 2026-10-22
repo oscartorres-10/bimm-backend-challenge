@@ -1,0 +1,168 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""One execution of the XML → JSON → database ingestion pipeline."""
+type IngestionRun {
+  """Why the run failed or was partial."""
+  errorMessage: String
+
+  """Makes whose vehicle types could not be fetched."""
+  failedMakes: Int!
+
+  """Null while running."""
+  finishedAt: DateTime
+
+  """Unique, increasing run number."""
+  id: Int!
+
+  """Makes stored so far."""
+  processedMakes: Int!
+
+  """Source records skipped because they were malformed."""
+  rejectedRecords: Int!
+
+  """When the run started."""
+  startedAt: DateTime!
+
+  """Current state of the run."""
+  status: IngestionStatus!
+
+  """Makes this run intends to process."""
+  totalMakes: Int!
+
+  """What started the run."""
+  trigger: IngestionTrigger!
+}
+
+"""Lifecycle state of an ingestion run."""
+enum IngestionStatus {
+  """The run stopped because of an error."""
+  FAILED
+
+  """Finished, but vehicle types could not be fetched for some makes."""
+  PARTIALLY_SUCCEEDED
+
+  """The run is currently in progress."""
+  RUNNING
+
+  """Every make and its vehicle types were stored."""
+  SUCCEEDED
+}
+
+"""What started an ingestion run."""
+enum IngestionTrigger {
+  """Started through the startIngestion mutation."""
+  MANUAL
+
+  """Started automatically when the service booted."""
+  STARTUP
+}
+
+"""
+A vehicle manufacturer with the vehicle types it produces. This is the unified shape combining both vPIC endpoints.
+"""
+type Make {
+  """vPIC Make_ID."""
+  makeId: Int!
+
+  """vPIC Make_Name."""
+  makeName: String!
+
+  """Vehicle types produced by this make, ordered by typeId."""
+  vehicleTypes: [VehicleType!]!
+
+  """
+  When vehicleTypes was last refreshed from vPIC. Null means the vehicle types have never been fetched successfully.
+  """
+  vehicleTypesSyncedAt: DateTime
+}
+
+"""One page of makes."""
+type MakePage {
+  """True when more makes exist after this page."""
+  hasNextPage: Boolean!
+
+  """The makes on this page."""
+  items: [Make!]!
+
+  """Page size used for this page."""
+  limit: Int!
+
+  """Offset used for this page."""
+  offset: Int!
+
+  """Total number of makes matching the filter."""
+  totalCount: Int!
+}
+
+"""Optional filters for the makes query."""
+input MakesFilter {
+  """Case-insensitive substring of the make name, e.g. "toyo"."""
+  nameContains: String
+
+  """Only makes that produce this vehicle type (see vehicleTypes query)."""
+  vehicleTypeId: Int
+}
+
+type Mutation {
+  """
+  Downloads fresh data from vPIC and stores it. By default returns immediately with the RUNNING run (poll ingestionRun for progress). Fails with code CONFLICT if a run is already in progress, or FORBIDDEN if disabled by configuration.
+  """
+  startIngestion(
+    """
+    Wait for the run to finish before responding. Only sensible with INGESTION_MAKE_LIMIT set; a full run takes minutes.
+    """
+    waitForCompletion: Boolean! = false
+  ): IngestionRun!
+}
+
+type Query {
+  """One ingestion run by id, or null if unknown."""
+  ingestionRun(
+    """The ingestion run id."""
+    id: Int!
+  ): IngestionRun
+
+  """The most recently started ingestion run, or null if none ever ran."""
+  latestIngestionRun: IngestionRun
+
+  """Returns one make by its vPIC Make_ID, or null if unknown."""
+  make(
+    """vPIC Make_ID, e.g. 440."""
+    makeId: Int!
+  ): Make
+
+  """
+  Lists makes with their vehicle types, ordered by name. Supports filtering and offset/limit pagination.
+  """
+  makes(
+    """Optional filters; all given filters must match."""
+    filter: MakesFilter
+
+    """
+    Page size. Default 50, maximum GRAPHQL_MAX_PAGE_SIZE (1000 by default).
+    """
+    limit: Int
+
+    """Number of makes to skip. Default 0."""
+    offset: Int
+  ): MakePage!
+
+  """Every known vehicle type, ordered by typeId."""
+  vehicleTypes: [VehicleType!]!
+}
+
+"""A category of vehicle, e.g. "Passenger Car" or "Truck"."""
+type VehicleType {
+  """vPIC VehicleTypeId."""
+  typeId: Int!
+
+  """vPIC VehicleTypeName."""
+  typeName: String!
+}

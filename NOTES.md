@@ -68,13 +68,13 @@ See:
 
 - [x] **Step 11: GraphQL API and health check:** Add GraphQL types, resolvers, DataLoader, error formatting and logging, plus the health endpoint. ➕ 2026-10-21 ✅ 2026-10-22
 
-- [ ] **Step 12: Wire everything together:** Connect modules and dependencies, handle graceful shutdown, run it, and verify GraphQL and ingestion. ➕ 2026-10-21
-
-#CONTINUE  here
+- [x] **Step 12: Wire everything together:** Connect modules and dependencies, handle graceful shutdown, run it, and verify GraphQL and ingestion. ➕ 2026-10-21 ✅ 2026-10-22
 
 - [-] **Step 13: End-to-end tests:** Test ingestion through persistence and GraphQL using a fake vPIC server; verify the e2e suite. ➕ 2026-10-21 ❌ 2026-10-22
 
 - [ ] **Step 14: Docker:** Add the Dockerfile and Compose stack; build and smoke-test the container and PostgreSQL setup. ➕ 2026-10-21
+
+#CONTINUE  here
 
 - [-] **Step 15: GitHub Actions CI:** Add the workflow for quality checks, SQLite/PostgreSQL e2e tests, and Docker build and smoke test. ➕ 2026-10-21 ❌ 2026-10-22
 
